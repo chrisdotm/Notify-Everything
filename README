@@ -5,3 +5,5 @@ Email
 Notify My Android
 Growl
 
+This project uses the twitter bootstrap library, I'm not sure how else to credit it so
+https://github.com/twitter/bootstrap/blob/master/LICENSE
