@@ -15,11 +15,19 @@ define("port", default=settings.APP_PORT, help="set APP_PORT in settings.py", ty
 
 def main():
     tornado.options.parse_command_line()
+    settings = {
+        "static_path": os.path.join(os.path.dirname(__file__), "media"),
+        "cookie_secret": "61oETzKXQAGaYdkL5gEmGeJfdsfjdhfkjYYAEQnp2XdTP1o/Vo=",
+        "xsrf_cookies": True,
+        "debug": True,
+    }
     application = tornado.web.Application([
         (r"/", MainHandler),
         (r"/login", AuthHandler),
         (r"/home", NotifierHandler),
-    ],debug=True)
+        (r"/media", tornado.web.StaticFileHandler,
+            dict(path=settings['static_path'])),
+    ], **settings)
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
